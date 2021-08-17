@@ -20,7 +20,14 @@ def search(data, boxResults):
         if searchVal == row[2]:
             print(row)
             if row[6] == 'PASS':
-                return row
+                boxResults.append(row[0])
+                boxResults.append(row[1])
+                boxResults.append(row[2])
+                boxResults.append(row[3])
+                boxResults.append(row[4])
+                boxResults.append(row[5])
+                boxResults.append(row[6])
+                return boxResults
             else:
                 badPart()
 
@@ -54,9 +61,11 @@ def output():
 filepath = filedialog.askopenfilename()
 data = csv.reader(open(filepath, "r"), delimiter=",")
 
-while assy < 1:
-    boxResuts = ['Date', 'Time', 'Assembly Number', 'HSI', 'COC', 'OGP', 'Overall')
-    search(data, boxResuts)
+while assy < 5:
+    boxResults = ['Date', 'Time', 'Assembly Number', 'HSI', 'COC', 'OGP', 'Overall']
+    data.seek(0)
+    search(data, boxResults)
     assy += 1
 
+print(boxResults)
 output()
