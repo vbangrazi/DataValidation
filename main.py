@@ -16,6 +16,9 @@ def search(filepath, boxResults):
 
     searchVal = input('Scan next assembly: ')
 
+    if searchVal=="exit":
+        exit()
+
     for row in data:
         if searchVal == row[2]:
             boxResults.append(row[0])
@@ -43,6 +46,7 @@ def output():
     window = tk.Tk()
     n = 0
 
+
     for i in range(6):
         window.grid_columnconfigure(i, weight=1)
         window.grid_rowconfigure(i, weight=1)
@@ -53,22 +57,31 @@ def output():
                 borderwidth=1
             )
 
+            padx = 100
+            pady = 60
+
             frame.grid(row=i, column=j)
 
             if boxResults[n] == "FAIL" or boxResults[n] == " FAIL" or boxResults[n] == "CHECK" or boxResults[n] == " CHECK":
                 label = tk.Label(master=frame, text=boxResults[n], foreground="red3", background="tomato2")
                 label.grid(row=i, column=j, sticky="nsew")
-                label.pack(expand=True)
+                label.pack(fill=tk.BOTH, expand=True, ipadx=padx, ipady=pady)
 
             elif boxResults[n] == "PASS" or boxResults[n] == " PASS":
                 label = tk.Label(master=frame, text=boxResults[n], foreground="dark green", background="PaleGreen2")
                 label.grid(row=i, column=j, sticky="nsew")
-                label.pack(expand=True)
+                label.pack(fill=tk.BOTH, expand=True, ipadx=padx, ipady=pady)
 
             else:
+                if i==0:
+                    pady=40
+
+                if j<3:
+                    padx=50
+
                 label = tk.Label(master=frame, text=boxResults[n], foreground="grey1", background="snow")
                 label.grid(row=i, column=j, sticky="nsew")
-                label.pack(expand=True)
+                label.pack(fill=tk.BOTH, expand=True, ipadx=padx, ipady=pady)
 
             n += 1
 
@@ -79,9 +92,8 @@ def output():
 
 filepath = filedialog.askopenfilename()
 
-boxResults = ['Date', 'Time', 'Assembly Number', 'HSI', 'COC', 'OGP', 'Overall']
-
 while True:
+    boxResults = ['Date', 'Time', 'Assembly Number', 'HSI', 'COC', 'OGP', 'Overall']
     assy = 0
     while assy < 5:
         search(filepath, boxResults)
