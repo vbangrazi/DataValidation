@@ -1,6 +1,7 @@
 import csv
 import tkinter as tk
 from tkinter import filedialog
+import RPi.GPIO as IO
 
 
 # step down .csv looking for search, add to box_results
@@ -60,7 +61,11 @@ def duplicate_check(box_results, scanned_good):
     repeat_search_index = 13
 
     def advance_label():
-        # TODO: add motor control
+        IO.setmode(IO.BOARD)
+        # IO.setwarnings(False)
+        IO.setup(12, IO.OUT)
+        label_motor = IO.PWM(12, 50)
+        label_motor.start(1)
         return
 
     for part in new_scanned_init:
